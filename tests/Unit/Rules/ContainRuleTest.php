@@ -1,8 +1,9 @@
 <?php namespace PasswordPolicy\Tests\Unit\Rules;
 
+use PasswordPolicy\Tests\TestCase;
 use PasswordPolicy\Rules\ContainRule;
 
-class ContainRuleTest extends \PHPUnit_Framework_TestCase
+class ContainRuleTest extends TestCase
 {
     /** @test */
     function it_tests_a_string_contains_a_string()

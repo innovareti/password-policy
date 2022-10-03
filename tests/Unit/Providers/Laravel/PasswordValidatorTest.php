@@ -1,13 +1,14 @@
 <?php namespace PasswordPolicy\Tests\Unit\Providers\Laravel;
 
+use Mockery as m;
 use PasswordPolicy\Policy;
+use PasswordPolicy\Validator;
 use PasswordPolicy\PolicyBuilder;
 use PasswordPolicy\PolicyManager;
+use PasswordPolicy\Tests\TestCase;
 use PasswordPolicy\Providers\Laravel\PasswordValidator;
-use PasswordPolicy\Validator;
-use Mockery as m;
 
-class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
+class PasswordValidatorTest extends TestCase
 {
     /** @test */
     public function it_calls_the_validator_using_the_default_policy()

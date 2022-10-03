@@ -8,12 +8,17 @@
       "PasswordPolicy\\Database\\Factories\\": "database/factories"
     }
   },
+  "extra":{
+    "laravel": [
+      "src/PasswordPolicy/Providers/Laravel/PasswordPolicyServiceProvider"
+    ]
+  },
   "require": {
-    "php": ">=5.5"
+    "php": ">=5.5",
+    "laravel/laravel": "6.*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.8",
-    "mockery/mockery": "^0.9.5"
+    "orchestra/testbench": "^4.0"
   },
   "scripts": {
     "test": "vendor/bin/phpunit",

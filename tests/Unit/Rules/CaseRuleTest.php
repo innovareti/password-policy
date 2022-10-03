@@ -1,8 +1,9 @@
 <?php namespace PasswordPolicy\Tests\Unit\Rules;
 
 use PasswordPolicy\Rules\CaseRule;
+use PasswordPolicy\Tests\TestCase;
 
-class CaseRuleTest extends \PHPUnit_Framework_TestCase
+class CaseRuleTest extends TestCase
 {
     /** @test */
     function it_tests_a_string_contains_a_given_number_of_lower_case_characters()

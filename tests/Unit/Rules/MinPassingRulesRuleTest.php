@@ -1,12 +1,13 @@
 <?php namespace PasswordPolicy\Tests\Unit\Rules;
 
+use PasswordPolicy\Rule;
 use PasswordPolicy\Policy;
 use PasswordPolicy\PolicyBuilder;
-use PasswordPolicy\Rule;
 use PasswordPolicy\Rules\CaseRule;
+use PasswordPolicy\Tests\TestCase;
 use PasswordPolicy\Rules\MinPassingRulesRule;
 
-class MinPassingRulesRuleTest extends \PHPUnit_Framework_TestCase
+class MinPassingRulesRuleTest extends TestCase
 {
     /** @test */
     function passing_rules_pass()

@@ -1,12 +1,13 @@
 <?php namespace PasswordPolicy\Tests\Unit;
 
 use Mockery\Mock;
+use PasswordPolicy\Rule;
 use PasswordPolicy\Policy;
 use PasswordPolicy\PolicyBuilder;
-use PasswordPolicy\Rule;
+use PasswordPolicy\Tests\TestCase;
 use PasswordPolicy\Rules\LengthRule;
 
-class PolicyBuilderTest extends \PHPUnit_Framework_TestCase
+class PolicyBuilderTest extends TestCase
 {
     /** @test */
     function it_tests_min_length_can_be_added_to_a_policy()
@@ -22,8 +23,8 @@ class PolicyBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(true);
     }
 
-    protected function tearDown()
-    {
-        \Mockery::close();
-    }
+    // protected function tearDown()
+    // {
+        // \Mockery::close();
+    // }
 }

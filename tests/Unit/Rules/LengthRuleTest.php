@@ -1,9 +1,10 @@
 <?php namespace PasswordPolicy\Tests\Unit\Rules;
 
 
+use PasswordPolicy\Tests\TestCase;
 use PasswordPolicy\Rules\LengthRule;
 
-class LengthRuleTest extends \PHPUnit_Framework_TestCase
+class LengthRuleTest extends TestCase
 {
     /** @test */
     function it_tests_min_length()

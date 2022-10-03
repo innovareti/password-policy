@@ -2,11 +2,13 @@
 
 namespace PasswordPolicy\Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Models\UserPasswordPolicy;
+use PasswordPolicy\Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UserPasswordPolicyTest extends \PHPUnit_Framework_TestCase
+class UserPasswordPolicyTest extends TestCase
 {
+   use RefreshDatabase;
   /** @test */
   function a_UserPasswordPolicy_is_active()
   {

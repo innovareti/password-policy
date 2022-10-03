@@ -1,11 +1,12 @@
 <?php namespace PasswordPolicy\Tests\Unit;
 
 use PasswordPolicy\Policy;
+use PasswordPolicy\Validator;
 use PasswordPolicy\PolicyBuilder;
 use PasswordPolicy\PolicyManager;
-use PasswordPolicy\Validator;
+use PasswordPolicy\Tests\TestCase;
 
-class PolicyManagerTest extends \PHPUnit_Framework_TestCase
+class PolicyManagerTest extends TestCase
 {
     /** @test */
     public function it_sets_the_default_policy_name()

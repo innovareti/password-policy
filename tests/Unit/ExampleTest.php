@@ -1,10 +1,11 @@
 <?php namespace PasswordPolicy\Tests\Unit;
 
 use PasswordPolicy\Policy;
-use PasswordPolicy\PolicyBuilder;
 use PasswordPolicy\Validator;
+use PasswordPolicy\PolicyBuilder;
+use PasswordPolicy\Tests\TestCase;
 
-class ExampleTest extends \PHPUnit_Framework_TestCase
+class ExampleTest extends TestCase
 {
     function testExampleOne()
     {

@@ -1,8 +1,9 @@
 <?php namespace PasswordPolicy\Tests\Unit\Rules;
 
+use PasswordPolicy\Tests\TestCase;
 use PasswordPolicy\Rules\SpecialCharacterRule;
 
-class SpecialCharacterRuleTest extends \PHPUnit_Framework_TestCase
+class SpecialCharacterRuleTest extends TestCase
 {
     /** @test */
     public function it_tests_a_string_includes_special_characters()

@@ -3,10 +3,11 @@
 namespace PasswordPolicy\Tests\Integration\Providers\Laravel;
 
 use PasswordPolicy\Policy;
-use PasswordPolicy\PolicyBuilder;
 use PasswordPolicy\Validator;
+use PasswordPolicy\PolicyBuilder;
+use PasswordPolicy\Tests\TestCase;
 
-class PasswordValidatorTest extends \PHPUnit_Framework_TestCase
+class PasswordValidatorTest extends TestCase
 {
     protected $policy;
 

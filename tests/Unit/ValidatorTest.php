@@ -1,12 +1,13 @@
 <?php namespace PasswordPolicy\Tests\Unit;
 
 use Mockery as m;
-use PasswordPolicy\Policy;
 use PasswordPolicy\Rule;
-use PasswordPolicy\Rules\LengthRule;
+use PasswordPolicy\Policy;
 use PasswordPolicy\Validator;
+use PasswordPolicy\Tests\TestCase;
+use PasswordPolicy\Rules\LengthRule;
 
-class ValidatorTest extends \PHPUnit_Framework_TestCase
+class ValidatorTest extends TestCase
 {
     /** @test */
     function it_correctly_sets_the_policy_instance()

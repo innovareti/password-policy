@@ -34,6 +34,7 @@ class PasswordPolicyServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->configureValidationRule();
+        $this->loadMigrationsFrom(__DIR__ . '/../../../../database/migrations');
     }
 
     /**

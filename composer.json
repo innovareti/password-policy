@@ -5,7 +5,8 @@
     "psr-4": {
       "PasswordPolicy\\Tests\\": "tests/",
       "PasswordPolicy\\": "src/PasswordPolicy/",
-      "PasswordPolicy\\Database\\Factories\\": "database/factories"
+      "PasswordPolicy\\Database\\Factories\\": "database/factories",
+      "PasswordPolicy\\Models\\": "src/Models"
     }
   },
   "extra":{

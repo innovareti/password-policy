@@ -3,16 +3,13 @@
 namespace PasswordPolicy\Database\Factories;
 
 use Models\UserPasswordPolicy;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Faker\Generator as Faker;
 
-class UserPasswordPolicyFactory extends Factory
-{
-    protected $model = UserPasswordPolicy::class;
 
-    public function definition()
-    {
-        return [
-            //
-        ];
-    }
-}
+$factory->define(UserPasswordPolicy::class, function (Faker $faker) {
+    return [
+      //
+    ];
+  });
+
+

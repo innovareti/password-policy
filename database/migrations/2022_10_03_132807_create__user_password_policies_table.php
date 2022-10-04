@@ -30,6 +30,6 @@ class CreateUserPasswordPoliciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_user_password_policies');
+        Schema::dropIfExists('user_password_policies');
     }
 }

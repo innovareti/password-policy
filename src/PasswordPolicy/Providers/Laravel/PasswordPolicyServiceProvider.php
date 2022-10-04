@@ -35,14 +35,19 @@ class PasswordPolicyServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->configureValidationRule();
+        
         $this->loadMigrationsFrom(__DIR__ . '/../../../../database/migrations');
+        
         $this->app->make('Illuminate\Database\Eloquent\Factory')
         ->load(__DIR__.'/../database/factories');
+        
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallPasswordPolicyPackage::class,
             ]);
         }
+
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'passwordpolicy');   
     }
 
     /**

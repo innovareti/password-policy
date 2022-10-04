@@ -1,6 +1,6 @@
 <?php
 
-namespace Models;
+namespace PasswordPolicy\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

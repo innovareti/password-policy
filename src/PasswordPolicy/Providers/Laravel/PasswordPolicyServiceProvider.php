@@ -1,10 +1,11 @@
 <?php namespace PasswordPolicy\Providers\Laravel;
 
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\ServiceProvider;
 use PasswordPolicy\PolicyBuilder;
 use PasswordPolicy\PolicyManager;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
 use PasswordPolicy\Providers\Laravel\Facade;
+use PasswordPolicy\Console\InstallPasswordPolicyPackage;
 
 /**
  * Class PasswordPolicyServiceProvider
@@ -37,6 +38,11 @@ class PasswordPolicyServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../../../../database/migrations');
         $this->app->make('Illuminate\Database\Eloquent\Factory')
         ->load(__DIR__.'/../database/factories');
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallPasswordPolicyPackage::class,
+            ]);
+        }
     }
 
     /**

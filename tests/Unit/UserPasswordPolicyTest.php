@@ -12,7 +12,6 @@ class UserPasswordPolicyTest extends TestCase
   /** @test */
   function a_UserPasswordPolicy_is_active()
   {
-    $test = new UserPasswordPolicy;
     $userPasswordPolicy = factory(UserPasswordPolicy::class)->create(['user_id' => 1]);
     $this->assertEquals(0, $userPasswordPolicy->is_active);
   }

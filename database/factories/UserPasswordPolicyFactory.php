@@ -2,7 +2,7 @@
 
 namespace PasswordPolicy\Database\Factories;
 
-use Models\UserPasswordPolicy;
+use PasswordPolicy\Models\UserPasswordPolicy;
 use Faker\Generator as Faker;
 
 

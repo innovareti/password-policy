@@ -48,6 +48,8 @@ class PasswordPolicyServiceProvider extends ServiceProvider
         }
 
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'passwordpolicy');   
+
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 
     /**

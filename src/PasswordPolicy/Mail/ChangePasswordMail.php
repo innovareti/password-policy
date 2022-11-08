@@ -5,17 +5,16 @@ namespace PasswordPolicy\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
 
 class ChangePasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public $mail;
 
-    public function __construct(User $user)
+    public function __construct(array $mail)
     {
-        $this->user = $user;
+        $this->mail = $mail;
     }
 
     public function build()

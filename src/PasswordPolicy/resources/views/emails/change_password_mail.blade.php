@@ -18,9 +18,9 @@
                 <tr>
                     <td style="text-align:left;padding:14px;border-bottom:1px solid #2ea2cd">
                         <p style="font-size:16px;font-family:'Calibri Light', sans-serif !important;margin:0;">
-                            <b>Olá {{ $user['name'] }}!</b></p>
+                            <b>Olá {{ $mail['name'] }}!</b></p>
                         <p style="font-family:'Calibri Light', sans-serif !important;font-size:14px;">
-                            Uma solicitação de alteração de senha foi enviada para o e-mail em questão. Para trocar a senha, basta <a href="">clicar aqui</a>.
+                            Uma solicitação de alteração de senha foi enviada para o e-mail em questão. Para trocar a senha, basta <a href="{{ $mail['link'] }}">clicar aqui</a>.
                         </p>
                         <p style="font-family:'Calibri Light', sans-serif !important;font-size:14px;">Atenciosamente, <br>
                             <b>InnovareTI.</b></p>

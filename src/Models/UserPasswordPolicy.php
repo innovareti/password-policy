@@ -11,7 +11,7 @@ class UserPasswordPolicy extends Model
     ];
 
     protected $fillable = [
-        'user_id', 'password_changed_date', 'is_active'
+        'user_id', 'password_changed_date', 'is_active', 'remember_token'
     ];
 
 }

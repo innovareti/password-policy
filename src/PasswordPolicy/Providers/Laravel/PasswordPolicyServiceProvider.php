@@ -41,15 +41,13 @@ class PasswordPolicyServiceProvider extends ServiceProvider
         $this->app->make('Illuminate\Database\Eloquent\Factory')
         ->load(__DIR__.'/../database/factories');
         
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                InstallPasswordPolicyPackage::class,
-            ]);
-        }
+        $this->commands([
+            InstallPasswordPolicyPackage::class,
+        ]);
 
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'passwordpolicy');   
 
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../../../../routes/web.php');
     }
 
     /**

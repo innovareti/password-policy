@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use PasswordPolicy\Http\Controllers\UserPasswordPolicyController;
  
     /*
     |--------------------------------------------------------------------------
     | Routes about Recovery Password
     |--------------------------------------------------------------------------
     */
-    Route::post('user/recovery', 'UserController@recovery');
-    Route::get('user/recovery/{token}', 'UserController@recoveryForm')->name('user.password.recovery.form');
-    Route::post('user/recovery/{token}', 'UserController@change');
+    Route::post('user/recoveryPolicy', [UserPasswordPolicyController::class, 'recovery']);
+    Route::get('user/recoveryPolicy/{token}', [UserPasswordPolicyController::class, 'recoveryForm'])->name('user.passwordPolicy.recovery.form');
+    Route::post('user/recoveryPolicy/{token}', [UserPasswordPolicyController::class, 'change']);
+

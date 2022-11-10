@@ -43,8 +43,7 @@ class PolicyBuilder
      */
     public function defaultRules()
     {
-        $policy = new Policy;
-        $defaultRules = $policy->defaultRules();
+        $defaultRules = Policy::defaultRules();
 
         $this->policy->addRule(
             (new LengthRule)->min($defaultRules['minLength']) //minLength
@@ -54,6 +53,9 @@ class PolicyBuilder
         );
         $this->policy->addRule(
             (new CaseRule)->lower($defaultRules['lowerCase']) //minLowerCase
+        );
+        $this->policy->addRule(
+            (new DigitRule)->min($defaultRules['digits']) //minDigits
         );
         $this->policy->addRule(
             (new SpecialCharacterRule)->min($defaultRules['specialCharacters']) //minSpecialCharacters

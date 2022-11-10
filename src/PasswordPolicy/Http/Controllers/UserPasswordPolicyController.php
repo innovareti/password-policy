@@ -3,8 +3,9 @@
 namespace PasswordPolicy\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Requests\UserRequest;
+use PasswordPolicy\Policy;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use PasswordPolicy\Models\UserPasswordPolicy;
@@ -21,8 +22,9 @@ class UserPasswordPolicyController extends BaseController
         $condition = $this->checkToken($token);
         $token_expired = $condition['token_expired'];
         $page = 'recovery';
+        $passwordRules = Policy::defaultRules();
         
-        return view('passwordpolicy::recovery', compact('token_expired', 'token', 'page'));
+        return view('passwordpolicy::recovery', compact('token_expired', 'token', 'page', 'passwordRules'));
     }
 
     public function checkToken($token)

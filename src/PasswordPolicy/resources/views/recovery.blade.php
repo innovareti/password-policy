@@ -29,15 +29,34 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">Senha</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" placeholder="password" required>
+                                <input id="password" type="password" class="form-control" name="password" placeholder="Senha" required>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirme a Senha</label>
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="password confirmation" required>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirmação de senha" required>
                             </div>
+                        </div>
+
+                        <div>
+                            A senha precisa ter no minimo:
+                            @if(isset($passwordRules['minLength']))
+                                {{$passwordRules['minLength']}} caracteres.
+                            @endif
+                            @if(isset($passwordRules['upperCase']))
+                                Caracteres minúsculos.
+                            @endif
+                            @if(isset($passwordRules['upperCase']))
+                                Caracteres maiúsculos.
+                            @endif
+                            @if(isset($passwordRules['digits']))
+                                Numeros.
+                            @endif
+                            @if(isset($passwordRules['specialCharacters']))
+                                Caracteres especiais.
+                            @endif
                         </div>
 
                         <div class="form-group row mb-0">

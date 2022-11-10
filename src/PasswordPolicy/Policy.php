@@ -16,4 +16,15 @@ class Policy
     {
         return $this->rules;
     }
+
+    public function defaultRules()
+    {
+        return [
+            'minLength' => 8,
+            'upperCase' => 1,
+            'lowerCase' => 1,
+            'specialCharacters' => 1
+        ];
+    }
+
 }

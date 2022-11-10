@@ -1,6 +1,7 @@
 <?php namespace PasswordPolicy;
 
 use Closure;
+use PasswordPolicy\Policy;
 use PasswordPolicy\Rules\CaseRule;
 use PasswordPolicy\Rules\ContainRule;
 use PasswordPolicy\Rules\DigitRule;
@@ -31,6 +32,34 @@ class PolicyBuilder
     public function __construct(Policy $policy)
     {
         $this->policy = $policy;
+    }
+
+    /**
+     * Add default rules
+     *
+     * @param $length int
+     *
+     * @return $this
+     */
+    public function defaultRules()
+    {
+        $policy = new Policy;
+        $defaultRules = $policy->defaultRules();
+
+        $this->policy->addRule(
+            (new LengthRule)->min($defaultRules['minLength']) //minLength
+        );
+        $this->policy->addRule(
+            (new CaseRule)->upper($defaultRules['upperCase']) //minUpperCase
+        );
+        $this->policy->addRule(
+            (new CaseRule)->lower($defaultRules['lowerCase']) //minLowerCase
+        );
+        $this->policy->addRule(
+            (new SpecialCharacterRule)->min($defaultRules['specialCharacters']) //minSpecialCharacters
+        );
+
+        return $this;
     }
 
     /**

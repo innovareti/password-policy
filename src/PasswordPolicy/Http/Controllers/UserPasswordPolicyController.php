@@ -3,6 +3,7 @@
 namespace PasswordPolicy\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -33,7 +34,7 @@ class UserPasswordPolicyController extends BaseController
         return ['token_expired' => false];
     }
 
-    public function change(Request $request)
+    public function change(UserRequest $request)
     {
         $data = $request->all();
         DB::beginTransaction();

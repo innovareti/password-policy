@@ -51,7 +51,6 @@ class InstallPasswordPolicyPackage extends Command
                 Mail::to($user->email)->queue(new ChangePasswordMail($mail));
 
                 $user->save();
-                continue;
             }
         }
 

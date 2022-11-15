@@ -26,7 +26,7 @@
                         <input type="hidden" name="token" value="{{ $token }}">
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">Senha</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right center">Senha:</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" placeholder="Senha" required>
@@ -34,38 +34,54 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirme a Senha</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right" style="text-align:center">Confirme a Senha:</label>
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Confirmação de senha" required>
                             </div>
                         </div>
 
-                        <div>
-                            A senha precisa ter no minimo:
+                        <div class="center">
+                            <div >
+                            A senha precisa conter pelo menos:
+                            </br>
                             @if(isset($passwordRules['minLength']))
+                                <span class="required"> * </span>
                                 {{$passwordRules['minLength']}} caracteres.
+                                </br>
                             @endif
                             @if(isset($passwordRules['upperCase']))
+                                <span class="required"> * </span>
                                 Caracteres minúsculos.
+                                </br>
                             @endif
                             @if(isset($passwordRules['upperCase']))
+                                <span class="required"> * </span>
                                 Caracteres maiúsculos.
+                                </br>
                             @endif
                             @if(isset($passwordRules['digits']))
-                                Numeros.
+                                <span class="required"> * </span>
+                                Números.
+                                </br>
                             @endif
                             @if(isset($passwordRules['specialCharacters']))
-                                Caracteres especiais.
+                                <span class="required"> * </span>
+                                Símbolos (# $ % & ').
                             @endif
+                            </div>
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-6 offset-md-3">
                                 <button type="submit" class="btn btn-primary">
                                     Trocar a Senha
                                 </button>
                             </div>
                         </div>
+
+                        @if(isset($validate))
+                            <span style="color:red">Atenção: {{$validate}} !</span>
+                        @endif
                     </form>
                 @else
                     <p class="text-center" style="margin-top:45px;font-weight:bold;font-size:20px;color:#C44D58;">O token informado já foi utilizado.</p>
@@ -138,6 +154,20 @@
     .text-center{
         margin:10px 0 20px -10px;
         text-align:center;
+    }
+
+    .required{
+        color:red; 
+        font-weight:bold    
+    }
+
+    .center{
+        display: flex; 
+        justify-content: center
+    }
+
+    .row>*{
+        padding-right:0px
     }
 
 </style>

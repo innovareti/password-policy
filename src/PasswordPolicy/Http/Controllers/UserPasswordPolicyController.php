@@ -5,6 +5,7 @@ namespace PasswordPolicy\Http\Controllers;
 use App\Models\User;
 use PasswordPolicy\Policy;
 use Illuminate\Http\Request;
+use PasswordPolicy\Validator;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -29,33 +30,46 @@ class UserPasswordPolicyController extends BaseController
 
     public function checkToken($token)
     {
-        if (UserPasswordPolicy::where('remember_token', $token)->value('token_expired') == 's') {
+        $token_expired = UserPasswordPolicy::where('remember_token', $token)->value('token_expired');
+        if($token_expired == 's'){
             return ['token_expired' => true];
         }
 
         return ['token_expired' => false];
     }
 
-    public function change(UserRequest $request)
+    public function change(Request $request)
     {
         $data = $request->all();
         DB::beginTransaction();
         try {
+            $validate = Policy::validate($data['password']);
+
+            $page = 'recovery';
+            $token = $data['token'];
+            $token_expired = false;
+            $passwordRules = Policy::defaultRules();
+
+            //Validando
+            if($validate != "success"){
+                return view('passwordpolicy::recovery', compact('page', 'validate', 'token', 'token_expired', 'passwordRules'));
+            } else if ($data['password'] != $data['password_confirmation']){
+                $validate = "As senhas não conferem";
+                return view('passwordpolicy::recovery', compact('page', 'validate', 'token', 'token_expired', 'passwordRules'));
+            }
+
             if($userPasswordPolicy = UserPasswordPolicy::where('remember_token', $data['token'])->first()){
                 $user = User::find($userPasswordPolicy->user_id);
 
-                if ($data['password'] == $data['password_confirmation']) {
-                    if ($user->update(['password' => $data['password']])) {
-                        $userPasswordPolicy->update(['token_expired' => 's']);
-    
-                        DB::commit();
-                        $page = "success";
-                        return view('passwordpolicy::recovery', compact('page'));
-                    }
-                } else {
-                    $page = "failed";
+                if ($user->update(['password' => $data['password']])) {
+                    $userPasswordPolicy->token_expired = 's';
+                    $userPasswordPolicy->save();
+
+                    DB::commit();
+                    $page = "success";
                     return view('passwordpolicy::recovery', compact('page'));
                 }
+
             } else {
                 $page = "recovery";
                 $token_expired = "s";

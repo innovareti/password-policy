@@ -54,4 +54,35 @@ class Policy
         return $validationMessage;
     }
 
+    public static function validate($password){
+        $defaultRules= Policy::defaultRules();
+
+        if(isset($defaultRules['minLength'])){
+            if(strlen($password) < $defaultRules['minLength'])
+                return "A senha inserida não possui ". $defaultRules['minLength'] . " caracteres";
+        }
+        if(isset($defaultRules['upperCase'])){
+            if(!preg_match('/[A-Z]/', $password))
+                return "A senha inserida não possui caracteres maiúsculos";
+        }
+
+        if(isset($defaultRules['lowerCase'])){
+            if(!preg_match('/[a-z]/', $password))
+                return "A senha inserida não possui caracteres minúsculos";
+        }
+
+        if(isset($defaultRules['digits'])){
+            if(!preg_match('/\d/', $password))
+                return "A senha inserida não possui números";
+        }
+
+        if(isset($defaultRules['specialCharacters'])){
+            if(!preg_match('/[^a-zA-Z\d]/', $password))
+                return "A senha inserida não possui símbolos";
+        }
+
+        return "success";
+
+    }
+
 }

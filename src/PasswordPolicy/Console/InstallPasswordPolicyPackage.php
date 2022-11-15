@@ -41,7 +41,10 @@ class InstallPasswordPolicyPackage extends Command
                 //$user->password = $this->randomPassword();
 
                 $userPasswordPolicy = UserPasswordPolicy::where('user_id', $user->id)->first();
-                $userPasswordPolicy->update(['remember_token' => md5(uniqid(rand(), true))]);
+                $userPasswordPolicy->token_expired = null;
+                $userPasswordPolicy->update([
+                    'remember_token' => md5(uniqid(rand(), true)),
+                ]);
 
                 $mail = [
                     'name' => $user->name,

@@ -1,5 +1,9 @@
 <?php namespace PasswordPolicy;
 
+use DateTime;
+
+Use PasswordPolicy\Models\UserPasswordPolicy;
+
 class Policy
 {
     private $rules = [];
@@ -26,6 +30,24 @@ class Policy
             'digits' => 1,
             'specialCharacters' => 1
         ];
+    }
+
+    public static function isPasswordExpired($id){
+        $is_active = env('PASSWORD_POLICY_ACTIVE') ? env('PASSWORD_POLICY_ACTIVE') : false; 
+        $days = env('PASSWORD_POLICY_DAYS') ? env('PASSWORD_POLICY_DAYS') : 90;
+        if($is_active){
+            $userPolicy = UserPasswordPolicy::where('user_id', $id)->first();
+            $today = date("Y-m-d") . " -" . $days . " days";
+            $expiredDate = date("Y-m-d", strtotime($today));
+            $teste = $userPolicy->password_changed_date;
+            if($userPolicy->password_changed_date < $expiredDate){
+                //troca senha para aleatoria - mantém expirado para o usuario poder re-enviar e ter a msg ainda
+                //manda email
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     public static function validationMessage()

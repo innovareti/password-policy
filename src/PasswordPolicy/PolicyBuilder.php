@@ -45,21 +45,30 @@ class PolicyBuilder
     {
         $defaultRules = Policy::defaultRules();
 
-        $this->policy->addRule(
-            (new LengthRule)->min($defaultRules['minLength']) //minLength
-        );
-        $this->policy->addRule(
+        if(isset($defaultRules['minLength']))
+            $this->policy->addRule(
+                (new LengthRule)->min($defaultRules['minLength']) //minLength
+            );
+
+        if(isset($defaultRules['upperCase']))
+            $this->policy->addRule(
             (new CaseRule)->upper($defaultRules['upperCase']) //minUpperCase
-        );
-        $this->policy->addRule(
-            (new CaseRule)->lower($defaultRules['lowerCase']) //minLowerCase
-        );
-        $this->policy->addRule(
-            (new DigitRule)->min($defaultRules['digits']) //minDigits
-        );
-        $this->policy->addRule(
-            (new SpecialCharacterRule)->min($defaultRules['specialCharacters']) //minSpecialCharacters
-        );
+            );
+
+        if(isset($defaultRules['lowerCase']))
+            $this->policy->addRule(
+                (new CaseRule)->lower($defaultRules['lowerCase']) //minLowerCase
+            );
+
+        if(isset($defaultRules['digits']))
+            $this->policy->addRule(
+                (new DigitRule)->min($defaultRules['digits']) //minDigits
+            );
+            
+        if(isset($defaultRules['specialCharacters']))
+            $this->policy->addRule(
+                (new SpecialCharacterRule)->min($defaultRules['specialCharacters']) //minSpecialCharacters
+            );
 
         return $this;
     }

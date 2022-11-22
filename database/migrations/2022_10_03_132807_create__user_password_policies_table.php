@@ -18,7 +18,6 @@ class CreateUserPasswordPoliciesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->datetime('password_changed_date')->nullable();
-            $table->boolean('is_active')->default(0);
             $table->string('remember_token')->nullable();
             $table->string('token_expired')->nullable();
             $table->timestamps();

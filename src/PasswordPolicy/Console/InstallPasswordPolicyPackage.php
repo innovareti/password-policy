@@ -3,6 +3,7 @@
 namespace PasswordPolicy\Console;
 
 use App\Models\User;
+use PasswordPolicy\Policy;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -18,14 +19,14 @@ class InstallPasswordPolicyPackage extends Command
 
     public function handle()
     {
-        $this->info('Installing Password Policy Package...');
+        $this->info('Instalando pacote de política de senha...');
 
-        $this->info('Creating password policy table...');
+        $this->info('Criando tabela password policy...');
 
         Artisan::call('migrate');
         $this->info(Artisan::output());
 
-        $this->info('Seeding password policy table accordingly...');
+        $this->info('Populando tabela e trocando senhas inseguras...');
 
         $unsafePasswords = 0;
 
@@ -38,7 +39,7 @@ class InstallPasswordPolicyPackage extends Command
             if(Hash::check("password", $user->password)){
                 $unsafePasswords++;
 
-                //$user->password = $this->randomPassword();
+                $user->password = Policy::randomPassword();
 
                 $userPasswordPolicy = UserPasswordPolicy::where('user_id', $user->id)->first();
                 $userPasswordPolicy->token_expired = null;
@@ -58,19 +59,8 @@ class InstallPasswordPolicyPackage extends Command
         }
 
         if($unsafePasswords > 0)
-            $this->info('Found ' . $unsafePasswords . ' unsafe password(s). Password(s) were reset and email(s) were sent to the users for them to reset it');
+            $this->info('Encontrado ' . $unsafePasswords . ' senha(s) insegura(s). A senha foi resetada e um e-mail foi enviado para os usuários trocarem.');
 
-        $this->info('Installed PasswordPolicyPackage');
-    }
-
-    public function randomPassword() {
-        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-        $pass = array(); //remember to declare $pass as an array
-        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-        for ($i = 0; $i < 8; $i++) {
-            $n = rand(0, $alphaLength);
-            $pass[] = $alphabet[$n];
-        }
-        return implode($pass); //turn the array into a string
+        $this->info('Pacote PasswordPolicy instalado com sucesso');
     }
 }

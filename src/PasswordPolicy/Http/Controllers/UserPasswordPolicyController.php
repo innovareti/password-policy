@@ -50,7 +50,7 @@ class UserPasswordPolicyController extends BaseController
             $token_expired = false;
             $passwordRules = Policy::defaultRules();
 
-            //Validando
+            //Validando a senha
             if($validate != "success"){
                 return view('passwordpolicy::recovery', compact('page', 'validate', 'token', 'token_expired', 'passwordRules'));
             } else if ($data['password'] != $data['password_confirmation']){
@@ -62,6 +62,7 @@ class UserPasswordPolicyController extends BaseController
                 $user = User::find($userPasswordPolicy->user_id);
 
                 if ($user->update(['password' => $data['password']])) {
+                    $userPasswordPolicy->password_changed_date = date("Y-m-d");
                     $userPasswordPolicy->token_expired = 's';
                     $userPasswordPolicy->save();
 

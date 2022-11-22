@@ -1,6 +1,9 @@
 <?php namespace PasswordPolicy;
 
 use DateTime;
+use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use PasswordPolicy\Mail\ChangePasswordMail;
 
 Use PasswordPolicy\Models\UserPasswordPolicy;
 
@@ -34,15 +37,34 @@ class Policy
 
     public static function isPasswordExpired($id){
         $is_active = env('PASSWORD_POLICY_ACTIVE') ? env('PASSWORD_POLICY_ACTIVE') : false; 
-        $days = env('PASSWORD_POLICY_DAYS') ? env('PASSWORD_POLICY_DAYS') : 90;
-        if($is_active){
+        
+        if($is_active = true){
+
+            $days = env('PASSWORD_POLICY_DAYS') ? env('PASSWORD_POLICY_DAYS') : 90;
+
             $userPolicy = UserPasswordPolicy::where('user_id', $id)->first();
+
             $today = date("Y-m-d") . " -" . $days . " days";
+
             $expiredDate = date("Y-m-d", strtotime($today));
-            $teste = $userPolicy->password_changed_date;
+
             if($userPolicy->password_changed_date < $expiredDate){
-                //troca senha para aleatoria - mantém expirado para o usuario poder re-enviar e ter a msg ainda
-                //manda email
+                $user = User::find($id);
+
+                $userPolicy->token_expired = null;
+                $userPolicy->update([
+                    'remember_token' => md5(uniqid(rand(), true)),
+                ]);
+
+                $mail = [
+                    'name' => $user->name,
+                    'link' => route('user.passwordPolicy.recovery.form', ['token' => $userPolicy->remember_token])
+                ];
+        
+                Mail::to($user->email)->queue(new ChangePasswordMail($mail));
+
+                $user->save();
+
                 return true;
             }
         }
@@ -105,6 +127,17 @@ class Policy
 
         return "success";
 
+    }
+
+    public static function randomPassword() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); 
+        $alphaLength = strlen($alphabet) - 1; 
+        for ($i = 0; $i < 8; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+        return implode($pass); 
     }
 
 }

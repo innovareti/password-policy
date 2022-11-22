@@ -44,6 +44,8 @@
                             <div >
                             A senha precisa conter pelo menos:
                             </br>
+                            <div class="row">
+                            </div>
                             @if(isset($passwordRules['minLength']))
                                 <span class="required"> * </span>
                                 {{$passwordRules['minLength']}} caracteres.
@@ -70,7 +72,7 @@
                             @endif
                             </div>
                         </div>
-
+                        </br>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-3">
                                 <button type="submit" class="btn btn-primary">
@@ -80,16 +82,16 @@
                         </div>
 
                         @if(isset($validate))
-                            <span style="color:red">Atenção: {{$validate}} !</span>
+                            <span style="color:red">Atenção: {{$validate}}!</span>
                         @endif
                     </form>
                 @else
-                    <p class="text-center" style="margin-top:45px;font-weight:bold;font-size:20px;color:#C44D58;">O token informado já foi utilizado.</p>
+                    <p class="text-center" style="font-weight:bold;font-size:20px;color:#C44D58;">O token informado já foi utilizado.</p>
                 @endif
             @elseif($page == 'failed')
-                <p class="text-center" style="margin-top:45px;font-weight:bold;font-size:20px;color:#C44D58;">Ops, as senhas informadas não conferem</p>
+                <p class="text-center" style="font-weight:bold;font-size:20px;color:#C44D58;">Ops, as senhas informadas não conferem</p>
             @else
-                <p class="text-center" style="margin-top:45px;font-weight:bold;font-size:20px;color:forestgreen;">OK! A senha foi alterada com sucesso.</p>
+                <p class="text-center" style="font-weight:bold;font-size:20px;color:forestgreen;">OK! A senha foi alterada com sucesso.</p>
             @endif
         </div>
 

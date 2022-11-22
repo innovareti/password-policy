@@ -19,6 +19,6 @@ class ChangePasswordMail extends Mailable
 
     public function build()
     {
-        return $this->view('passwordpolicy::emails.change_password_mail');
+        return $this->view('passwordpolicy::emails.change_password_mail')->subject('Recuperação de Senha');
     }
 }

@@ -38,7 +38,7 @@ class Policy
     public static function isPasswordExpired($id){
         $is_active = env('PASSWORD_POLICY_ACTIVE') ? env('PASSWORD_POLICY_ACTIVE') : false; 
         
-        if($is_active = true){
+        if($is_active){
 
             $days = env('PASSWORD_POLICY_DAYS') ? env('PASSWORD_POLICY_DAYS') : 90;
 

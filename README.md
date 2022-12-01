@@ -12,7 +12,7 @@ A fluent password policy builder library. The package can be used stand-alone or
 
 ## Install
 ```
-$ composer require joshralph/password-policy
+$ composer require innovareti/password-policy
 ```
 
 ## Usage

@@ -1,175 +1,153 @@
-A fluent password policy builder library. The package can be used stand-alone or easily added to Laravel. 
+Passo 1: 
+Para instalar primeiro rode o seguinte comando:
 
-# Table of Contents
-- [Install](#install)
-- [Stand Alone Usage](#policy-builder)
-- [Laravel](#larave)
-    - [Install](#install-package)
-    - [Define Policies](#define-policies)
-    - [Setup Validation](#setup-validation)
+1
+composer require innovareti/password-policy
+E depois:
 
-## Install
-```
-$ composer require innovareti/password-policy
-```
+1
+php artisan passwordpolicy:install
+Esse comando criará a tabela de politica de senha no projeto e forçará a troca de senha para usuários que possuem a senha "password", primeiro trocando a senha para uma aleatória e mandando um email para redefinição no endereço do usuário.
 
-## Usage
+Passo 2: 
+Dentro do projeto, no arquivo config/app.php insira o seguinte provider no array de providers:
 
-### Policy Builder
+1
+    'providers' => [
+2
+​
+3
+        /*
+4
+         * Laravel Framework Service Providers...
+5
+         */
+6
+        PasswordPolicy\Providers\Laravel\PasswordPolicyServiceProvider::class,
+7
+      
+8
+        ...
+Passo 3:
+Em seguida, adicione no arquivo app/Providers/AppServiceProvider.php, dentro da função boot o seguinte código:
 
-```php
-$builder = new \PasswordPolicy\PolicyBuilder(new \PasswordPolicy\Policy);
-$builder->minLength(6)
-    ->upperCase();
-```
+1
+use PasswordPolicy;
+2
+use App\Models\User;
+3
+use PasswordPolicy\Observers\UserObserver;
+4
+use PasswordPolicy\PolicyBuilder; 
+5
+​
+6
+    public function boot()
+7
+    {
+8
+        PasswordPolicy::define('default', function (PolicyBuilder $builder) {
+9
+            $builder->defaultRules();
+10
+        });    
+11
+​
+12
+        User::observe(UserObserver::class);
+13
+    }
+Passo 4:
+Agora para utilizar a validação de senha existente no pacote, vá na classe Request desejada (Ex: UserRequest) e insira a regra "password" nas regras da senha:
 
-Any of the following methods may be chained on the builder class to build your password policy.
+1
+    public function rules()
+2
+    {
+3
+        $rules = [];
+4
+        $rules = [
+5
+             'name' => 'required',
+6
+             'email' => 'required|email|unique:users,email,' . request()->id,
+7
+             'cpf' => 'required|unique:users,cpf,' . request()->id,
+8
+             'password' => 'password' <--
+9
+        ];
+10
+        return $rules;
+11
+    }
+Além disso, na função messages da Request você pode adicionar a mensagem de retorno automatizada do pacote:
 
-#### minLength(length)
+1
+use PasswordPolicy\Policy;
+2
+​
+3
+    public function messages()
+4
+    {
+5
+        return [
+6
+            'required' => ':attribute é obrigatório',
+7
+            'unique' => ':attribute informado já está sendo utilizado',
+8
+            'email' => 'O e-mail deve ser válido',
+9
+            'password' => Policy::validationMessage() <--
+10
+        ];
+11
+    }
+Essa mensagem retornara as regras de acordo com o que está definido dentro do pacote caso o usuário insira a senha incorreta.
 
-##### length
-Type: int
+Passo 5:
+Na utilização da funcionalidade de forçar a troca de senha dos usuários a cada x tempo, é necessário adicionar o seguinte código no login do projeto:
 
-Minimum number of characters the password must contain.
-
-#### maxLength(length)
-
-##### length
-Type: int
-
-Maximum number of characters the password must contain.
-
-#### upperCase([min])
-
-##### min
-Type: int
-
-Minimum number of upper case characters the password must contain.
-
-#### lowerCase([min])
-
-##### min
-Type: int
-
-Minimum number of lower case characters the password must contain.
-
-#### digits([min])
-
-##### min
-Type: int
-
-Minimum number of numeric characters the password must contain.
-
-#### specialCharacters([min])
-
-##### min
-Type: int
-
-Minimum number of special characters the password must contain.
-
-#### doesNotContain(phrases [,phrases])
-
-##### phrases
-Type: string|array
-
-Phrases that the password should not contain
-
-*Example*
-
-```php
-->doesNotContain('password', $firstName, $lastName)
-```
-
-#### minPassingRules(passesRequired, ruleSet)
-
-##### passesRequired
-Type: int
-
-The minimum number of rules in the *ruleSet* that need to pass, in order for this rule to pass
-
-##### ruleSet
-Type: \Closure
-
-A closure which is given a new PolicyBuilder instance.
-
-*Example*
-
-```php
-// One of these rules must pass
-->minPassingRules(1, function (PolicyBuilder $builder) {
-    $builder->doesNotContain('password')
-        ->minLength(10);
-})
-```
-
-### Laravel
-
-If you are a Laravel user, this package can seamlessly integrate with your validators.
-
-#### Install Package
-
-Begin by adding the below service provider.
-```php
-// config/app.php
-
-'providers' => [
-    // ...
-    \PasswordPolicy\Providers\Laravel\PasswordPolicyServiceProvider::class,
-],
-```
-
-#### Define Policies
-
-Within an app service provider (e.g. AppServiceProvider.php) you can start defining password policies.
-
-```php
-// App/Providers/AppServiceProvider.php
-
-// use PasswordPolicy\PolicyBuilder;
+1
+use PasswordPolicy\Policy;
+2
+    /**
+3
+     * Method to authenticate User
+4
+     */
+5
+    public function auth(AuthRequest $request)
+6
+    {
+7
+    ...
+8
+      
+9
+    if(Policy::isPasswordExpired($user->id))
+10
+         return response()->json('Sua senha expirou! Um e-mail foi enviado no endereço '. $request->only(['email'])['email']. ' para redefinição da senha.', 401);
+11
+    
+12
+    ...
  
 
-/**
- * Bootstrap any application services.
- *
- * @return void
- */
-public function boot()
-{
-    \PasswordPolicy::define('default', function (PolicyBuilder $builder) {
-        $builder->minLength(8)
-            ->upperCase(3);
-            // ...
-    });
-}
-```
+E no .ENV as seguintes variáveis:
 
-You can define as many policies as you require, however it's recommended to stick with 'default' when possible.
+1
+PASSWORD_POLICY_ACTIVE=true
+2
+PASSWORD_POLICY_DAYS=90
+A variável PASSWORD_POLICY_ACTIVE estando "true" forçará a troca de senha dos usuários a cada x dias. Esses dias são definidos pela variável PASSWORD_POLICY_DAYS.
 
-#### Setup Validation
+Notas:
+1 - Caso as variáveis acima não estejam no .ENV, o pacote usa como padrão 90 dias e também não deixa essa troca de senha forçada ativa. 
 
-Once you're policies have been defined, you're ready to start using the policies. A new 'password' validation rule is now available to use.
+2 - A função "IsPasswordExpired" verificará de acordo com o ID do usuário passado se a senha deste está expirada ou não. Ela irá analisar a data da ultima vez que a senha do usuário foi atualizada. Essa data está contida na tabela que foi criada no comando de instalação (user_password_policies) e é atualizada atráves de um Observer (UserObserver) no pacote.
 
-```php
-// Request class
-
-/**
- * Declare validation rules
- * 
- * @return array
- */
-public function rules()
-{
-    return [
-        // ...
-        'password' => 'required|password'
-    ];
-}
-
-```
-
-The validator will use the 'default' policy by default. To use an alternative policy, add an additional parameter:
-```php
-
-'password' => 'required|password:admin'
-
-```
+ 

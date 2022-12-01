@@ -1,15 +1,19 @@
-Passo 1: 
+# Passo 1: 
 Para instalar primeiro rode o seguinte comando:
 
-1
+```php
 composer require innovareti/password-policy
+```
+
 E depois:
 
-1
+```php
 php artisan passwordpolicy:install
+```
+
 Esse comando criará a tabela de politica de senha no projeto e forçará a troca de senha para usuários que possuem a senha "password", primeiro trocando a senha para uma aleatória e mandando um email para redefinição no endereço do usuário.
 
-Passo 2: 
+#Passo 2: 
 Dentro do projeto, no arquivo config/app.php insira o seguinte provider no array de providers:
 
 1

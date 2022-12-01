@@ -77,6 +77,7 @@ Essa mensagem retornara as regras de acordo com o que está definido dentro do p
 # Passo 5:
 Na utilização da funcionalidade de forçar a troca de senha dos usuários a cada x tempo, é necessário adicionar o seguinte código no login do projeto:
 
+```php
 use PasswordPolicy\Policy;
     /**
      * Method to authenticate User

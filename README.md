@@ -99,7 +99,7 @@ PASSWORD_POLICY_DAYS=90
 ```
 A variável PASSWORD_POLICY_ACTIVE estando "true" forçará a troca de senha dos usuários a cada x dias. Esses dias são definidos pela variável PASSWORD_POLICY_DAYS.
 
-Notas:
+# Notas:
 1 - Caso as variáveis acima não estejam no .ENV, o pacote usa como padrão 90 dias e também não deixa essa troca de senha forçada ativa. 
 
 2 - A função "IsPasswordExpired" verificará de acordo com o ID do usuário passado se a senha deste está expirada ou não. Ela irá analisar a data da ultima vez que a senha do usuário foi atualizada. Essa data está contida na tabela que foi criada no comando de instalação (user_password_policies) e é atualizada atráves de um Observer (UserObserver) no pacote.

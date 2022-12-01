@@ -1,5 +1,3 @@
-[![Build Status](https://api.travis-ci.org/joshralph93/password-policy.svg?branch=master)](https://travis-ci.org/joshralph93/password-policy)
-
 A fluent password policy builder library. The package can be used stand-alone or easily added to Laravel. 
 
 # Table of Contents

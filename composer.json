@@ -1,5 +1,5 @@
 {
-  "name": "lucas-lima-c/password-policy",
+  "name": "innovareti/password-policy",
   "description": "A library to intuitively create password policies and validate a subject against them.",
   "autoload": {
     "psr-4": {

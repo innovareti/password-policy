@@ -17,9 +17,6 @@
   "require": {
     "php": ">=5.5"
   },
-  "require-dev": {
-    "orchestra/testbench": "^4.0"
-  },
   "scripts": {
     "test": "vendor/bin/phpunit",
     "test-f": "vendor/bin/phpunit --filter"

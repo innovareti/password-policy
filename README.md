@@ -16,7 +16,7 @@ Dentro do projeto, no arquivo config/app.php insira o seguinte provider no array
     
         ...
 ```
-E depois:
+E depois rode o comando:
 
 ```php
 php artisan passwordpolicy:install
